@@ -7,7 +7,8 @@ import (
 )
 
 func Migrate(s *src.Server) {
-	s.Context.AutoMigrate(&Test{})
+	s.Context.AutoMigrate(&Category{})
+	s.Context.AutoMigrate(&Product{})
 }
 
 func Seed(s *src.Server) {
@@ -17,7 +18,8 @@ func Seed(s *src.Server) {
 
 	CreateMigration(s, "seed")
 
-	SeedTest(s, 100)
+	SeedCategory(s, 10)
+	SeedProduct(s, 100, 10)
 }
 
 func InitGlobals(s *src.Server) {
