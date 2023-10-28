@@ -7,15 +7,13 @@ import (
 	"ProdCat/src/utils"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 )
 
 type Server struct {
 	Router     *gin.Engine
 	Logger     *services.Logger
 	Config     *utils.Config
-	Context    *gorm.DB
+	Data       *services.Data
 	Filesystem *services.Filesystem
 	Mailer     *services.Mailer
 	Hasher     *services.Hasher
@@ -64,23 +62,40 @@ func (s *Server) Initialize(envFile string) {
 		SecretKey: environment.(map[string]interface{})["jwt"].(map[string]interface{})["secret_key"].(string),
 	}
 
-	checkSetup(s)
+	s.Data = &services.Data{
+		Connection: &s.Config.DatabaseConnection,
+	}
 
-	s.Context, _ = gorm.Open(sqlite.Open(s.Config.DatabaseConnection), &gorm.Config{})
-	s.Context.AutoMigrate()
+	checkSetup(s)
 
 	s.Router = gin.Default()
 }
 
+func (s *Server) SetGlobal(key string, value interface{}) {
+	s.Globals[key] = value
+}
+
 func checkSetup(s *Server) {
 	checkFile(s, s.Config.LogFile)
-	checkFile(s, s.Config.DatabaseConnection)
+	checkDatabase(s)
 }
 
 func checkFile(s *Server, file string) error {
 	if !s.Filesystem.FileExists(file) {
 		return s.Filesystem.CreateEmptyFile(file)
 	}
+
+	return nil
+}
+
+func checkDatabase(s *Server) error {
+	err := checkFile(s, s.Config.DatabaseConnection)
+
+	if err != nil {
+		return err
+	}
+
+	s.Data.Initialize()
 
 	return nil
 }

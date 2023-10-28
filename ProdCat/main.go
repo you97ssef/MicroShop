@@ -16,8 +16,6 @@ func main() {
 	models.Migrate(server)
 	models.Seed(server)
 
-	models.InitGlobals(server)
-
 	controllers := &controllers.Controller{
 		Server: server,
 	}

@@ -1,9 +1,7 @@
 package models
 
 import (
-	"ProdCat/src"
 	"ProdCat/src/utils"
-	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -19,17 +17,15 @@ type Product struct {
 	gorm.Model
 }
 
-func SeedProduct(s *src.Server, q int, categories int) {
-	for i := 0; i < q; i++ {
-		p := Product{
-			Name:         "Product-" + fmt.Sprint(i),
-			Description:  "Description-" + utils.RandomString(10),
-			Price:        utils.RandomFloat(1, 100),
-			Image:        nil,
-			Availability: utils.RandomInt(0, 100),
-			CategoryID:   utils.RandomInt(1, categories),
-		}
+func ProductFactory() interface{} {
+	categories := 10
 
-		s.Context.Create(&p)
+	return &Product{
+		Name:         "Product-" + utils.RandomString(3),
+		Description:  "Description-" + utils.RandomString(10),
+		Price:        utils.RandomFloat(1, 100),
+		Image:        nil,
+		Availability: utils.RandomInt(0, 100),
+		CategoryID:   utils.RandomInt(1, categories),
 	}
 }

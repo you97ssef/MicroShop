@@ -1,28 +1,23 @@
 package models
 
 import (
-	"ProdCat/src"
-	"fmt"
+	"ProdCat/src/utils"
 
 	"gorm.io/gorm"
 )
 
 type Category struct {
-	Name string `json:"name"`
+	Name        string  `json:"name"`
 	Description *string `json:"description"`
-	Image *string `json:"image"`
+	Image       *string `json:"image"`
 
 	gorm.Model
 }
 
-func SeedCategory(s *src.Server, q int) {
-	for i := 0; i < q; i++ {
-		c := Category{
-			Name: "Category-" + fmt.Sprint(i),
-			Description: nil,
-			Image: nil,
-		}
-
-		s.Context.Create(&c)
+func CategoryFactory() interface{} {
+	return &Category{
+		Name:        "Category-" + utils.RandomString(3),
+		Description: nil,
+		Image:       nil,
 	}
 }
