@@ -27,6 +27,8 @@ func (r *Routes) RegisterRoutes(c *controllers.Controller, m *middleware.Middlew
 	api.POST("/products", c.NewProduct)
 	api.PUT("/products/:id", c.UpdateProduct)
 	api.DELETE("/products/:id", c.DeleteProduct)
+
+	api.GET("/search", c.Search)
 }
 
 func (r *Routes) RegisterCors() {
