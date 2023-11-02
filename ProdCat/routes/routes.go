@@ -17,6 +17,16 @@ type Routes struct {
 func (r *Routes) RegisterRoutes(c *controllers.Controller, m *middleware.Middleware) {
 	api := r.Server.Router.Group("", m.TestMiddleware())
 	api.GET("/", c.HelloWorld)
+
+	api.GET("/categories", c.GetCategories)
+	api.POST("/categories", c.NewCategory)
+	api.PUT("/categories/:id", c.UpdateCategory)
+	api.DELETE("/categories/:id", c.DeleteCategory)
+
+	api.GET("/categories/:id/products", c.GetCategoryProducts)
+	api.POST("/products", c.NewProduct)
+	api.PUT("/products/:id", c.UpdateProduct)
+	api.DELETE("/products/:id", c.DeleteProduct)
 }
 
 func (r *Routes) RegisterCors() {
