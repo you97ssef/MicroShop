@@ -1,0 +1,19 @@
+{
+    "config": {
+        "port": "80",
+        "log_file": "./logs/app.log",
+        "database_connection": "./data/database.sqlite"
+    },
+    "mailer": {
+        "username": "username",
+        "password": "password",
+        "host": "sandbox.smtp.mailtrap.io",
+        "port": "587"
+    },
+    "hasher": {
+        "cost": 12
+    },
+    "jwt": {
+        "secret_key": "secret"
+    }
+}
