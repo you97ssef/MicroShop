@@ -31,3 +31,20 @@ func (ctl *Controller) Search(c *gin.Context) {
 		"Search results",
 	)
 }
+
+
+func (ctl *Controller) Filter(c *gin.Context) {
+	max := c.Query("max")
+	min := c.Query("min")
+
+	if max == "" || min == "" {
+		BadRequest(c, "Missing query parameter")
+		return
+	}
+
+	var products []models.Product
+
+	ctl.Server.Data.Where("price >= ? AND price <= ?", min, max).Find(&products)
+
+	Ok(c, products,	"Filter results")
+}

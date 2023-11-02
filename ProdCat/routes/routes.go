@@ -29,6 +29,7 @@ func (r *Routes) RegisterRoutes(c *controllers.Controller, m *middleware.Middlew
 	api.DELETE("/products/:id", c.DeleteProduct)
 
 	api.GET("/search", c.Search)
+	api.GET("/filter", c.Filter)
 }
 
 func (r *Routes) RegisterCors() {
