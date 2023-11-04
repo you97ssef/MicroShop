@@ -21,9 +21,9 @@ class User extends Model
     ];
 
 
-    const USER = 0;
-    const SHIPPER = 1;
-    const ADMIN = 2;
+    const USER = 1;
+    const SHIPPER = 2;
+    const ADMIN = 3;
 
     public function isAdmin() {
         return $this->role == self::ADMIN;
