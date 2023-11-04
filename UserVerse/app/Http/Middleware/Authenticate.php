@@ -2,41 +2,34 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use Closure;
-use Illuminate\Contracts\Auth\Factory as Auth;
+use Illuminate\Support\Facades\Log;
 
-class Authenticate
-{
-    /**
-     * The authentication guard factory instance.
-     *
-     * @var \Illuminate\Contracts\Auth\Factory
-     */
-    protected $auth;
+class Authenticate {
+    public function handle(Request $request, Closure $next): Response {
+        $token = $request->bearerToken();
+        
+        if (!$token) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
 
-    /**
-     * Create a new middleware instance.
-     *
-     * @param  \Illuminate\Contracts\Auth\Factory  $auth
-     * @return void
-     */
-    public function __construct(Auth $auth)
-    {
-        $this->auth = $auth;
-    }
+        try {
+            $key = env('JWT_SECRET', 'secret');
 
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  $guard
-     * @return mixed
-     */
-    public function handle($request, Closure $next, $guard = null)
-    {
-        if ($this->auth->guard($guard)->guest()) {
-            return response('Unauthorized.', 401);
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+
+            $token = (array) $decoded;
+            $user = (array) $token['user'];
+            Log::info('user', $user);
+            
+            $request->user = $token['user'];
+        } 
+        catch (\Exception $e) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
         return $next($request);
