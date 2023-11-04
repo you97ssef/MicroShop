@@ -2,6 +2,8 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use App\Models\User;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -16,3 +18,7 @@
 
 $router->post('/login', 'AuthController@login');
 $router->post('/register', 'AuthController@register');
+
+$router->get('/user', ['middleware' => 'auth:' . User::USER, 'uses' => 'AuthController@verify']);
+$router->get('/admin', ['middleware' => 'auth:' . User::ADMIN, 'uses' => 'AuthController@verify']);
+$router->get('/shipper', ['middleware' => 'auth:' . User::SHIPPER, 'uses' => 'AuthController@verify']);

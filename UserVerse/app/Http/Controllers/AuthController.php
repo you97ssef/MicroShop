@@ -61,4 +61,13 @@ class AuthController extends Controller {
             'token' => $token
         ]);
     }
+
+    public function verify(Request $r) {
+        $user = $r->user;
+
+        return response()->json([
+            'message' => 'User is connected',
+            'user' => $user
+        ]);
+    }
 }
