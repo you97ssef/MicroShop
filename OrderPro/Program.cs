@@ -1,9 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using OrderPro.Data;
+using OrderPro.Data.Repos;
+using OrderPro.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<OrderProContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ICartRepo, CartRepo>(); 
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
