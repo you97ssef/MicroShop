@@ -9,7 +9,6 @@ public class Migrator
         var carts = new List<Cart>();
         for (int i = 1; i <= count; i++) {
             carts.Add(new Cart {
-                Id = i,
                 UserId = Random.Shared.Next(firstUser, users)
             });
         }
@@ -21,7 +20,6 @@ public class Migrator
         var items = new List<Item>();
         for (int i = 1; i <= count; i++) {
             items.Add(new Item {
-                Id = i,
                 CartId = Random.Shared.Next(1, carts),
                 ProductId = Random.Shared.Next(1, products),
                 Quantity = Random.Shared.Next(1, 5)
