@@ -4,9 +4,10 @@ namespace OrderPro.Interfaces;
 
 public interface ICartRepo
 {
-    Task<Cart> NewCart(int userId, IEnumerable<Item> items);
-    Task<Cart?> GetCart(int id);
-    Task<bool> AddToCart(Cart cart, IEnumerable<Item> items);
-    Task<bool> RemoveFromCart(Cart cart, IEnumerable<int> items);
+    Task<Cart> NewCart(int userId, List<Item> items);
+    Task<Cart?> GetCart(int userId);
+    Task<Cart?> GetCartWithItems(int userId);
+    Task<bool> AddToCart(Cart cart, Item item);
+    Task<bool> RemoveFromCart(Cart cart, int ProductId);
     Task<bool> Checkout(Cart cart);
 }

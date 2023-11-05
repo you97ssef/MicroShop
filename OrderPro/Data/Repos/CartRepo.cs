@@ -13,60 +13,72 @@ public class CartRepo : ICartRepo
         _db = db;
     }
 
-    public async Task<Cart> NewCart(int userId, IEnumerable<Item> items)
+    public async Task<Cart> NewCart(int userId, List<Item> items)
     {
         var cart = new Cart
         {
             UserId = userId,
-            Items = items.ToList()
         };
 
         await _db.Carts.AddAsync(cart);
         await _db.SaveChangesAsync();
 
+        foreach (var item in items)
+        {
+            item.CartId = cart.Id;
+        }
+
+        await _db.Items.AddRangeAsync(items);
+        await _db.SaveChangesAsync();
+
         return cart;
     }
 
-    public async Task<Cart?> GetCart(int id)
+    public async Task<Cart?> GetCart(int userId)
     {   
-        return await _db.Carts.Include(c => c.Items).FirstOrDefaultAsync(c => c.Id == id);
+        return await _db.Carts
+            .OrderByDescending(c => c.Id)
+            .FirstOrDefaultAsync(c => c.UserId == userId && !c.CheckedOut);
+    }
+    
+    public async Task<Cart?> GetCartWithItems(int userId) 
+    {
+        return await _db.Carts
+            .OrderByDescending(c => c.Id)
+            .Include(c => c.Items)
+            .FirstOrDefaultAsync(c => c.UserId == userId && !c.CheckedOut);
     }
 
-    public async Task<bool> AddToCart(Cart cart, IEnumerable<Item> items)
+    public async Task<bool> AddToCart(Cart cart, Item item)
     {
-        foreach (var item in items)
+        var i = cart.Items!.FirstOrDefault(i => i.ProductId == item.ProductId);
+
+        if (i is null)
         {
-            var i = cart.Items!.FirstOrDefault(i => i.Id == item.Id);
-
-            if (i == null)
-            {
-                cart.Items!.Add(item);
-            }
-            else
-            {
-                i.Quantity += item.Quantity;
-            }
-
-            _db.Carts.Update(cart);
+            item.CartId = cart.Id;
+            await _db.Items.AddAsync(item);
+        }
+        else
+        {
+            i.Quantity += item.Quantity;
         }
 
         return await _db.SaveChangesAsync() > 0;
     }
 
-    public async Task<bool> RemoveFromCart(Cart cart, IEnumerable<int> itemIds)
+    public async Task<bool> RemoveFromCart(Cart cart, int productId)
     {
-        foreach (var id in itemIds)
+        var i = cart.Items!.FirstOrDefault(i => i.ProductId == productId);
+
+        if (i is not null)
         {
-            var i = cart.Items!.FirstOrDefault(i => i.Id == id);
-
-            if (i == null)
-            {
-                return false;
-            }
-
+            _db.Items.Remove(i);
             cart.Items!.Remove(i);
-            
-            _db.Carts.Update(cart);
+        }
+
+        if (cart.Items!.Count == 0)
+        {
+            _db.Carts.Remove(cart);
         }
 
         return await _db.SaveChangesAsync() > 0;
