@@ -1,5 +1,9 @@
+const Payment = require("../data/models").Payment;
+
 async function get(req, res) {
-    res.send({ message: "Test works!", time: new Date() });
+    const payments = await Payment.findAll();
+
+    res.send({ message: "Test works!", time: new Date(), payments: payments });
 }
 
 function getId(req, res) {
