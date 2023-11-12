@@ -25,7 +25,7 @@ function post(req, res) {
     });
 }
 
-export default {
+module.exports = {
     get,
     getId,
     post,

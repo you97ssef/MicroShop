@@ -1,17 +1,16 @@
-import express from "express";
+const express = require("express");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-import bodyParser from "body-parser";
+const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
-import routes from "./routes/api.js";
+const routes = require("./routes/api.js");
 app.use(routes);
 
-import ErrorHandler from "./middlewares/errorHandler.js";
+const ErrorHandler = require("./middlewares/errorHandler.js");
 app.use(ErrorHandler);
-
 
 async function run() {
     app.listen(PORT, () => {

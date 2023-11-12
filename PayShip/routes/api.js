@@ -1,10 +1,10 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
 
-import testController from "../controllers/testController.js";
+const testController = require("../controllers/testController.js");
 
 router.get("/test", testController.get);
 router.get("/test/:id", testController.getId);
 router.post("/test", testController.post);
 
-export default router;
+module.exports = router;
