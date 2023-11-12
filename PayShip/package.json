@@ -18,6 +18,7 @@
     "sequelize": "^6.34.0"
   },
   "devDependencies": {
+    "babel-register": "^6.26.0",
     "nodemon": "^3.0.1"
   }
 }
