@@ -11,4 +11,9 @@ const paymentController = require("../controllers/paymentController.js");
 
 router.post("/payment", paymentController.makePayment);
 
+const shippingController = require("../controllers/shippingController.js");
+
+router.get("/shipping/:id", shippingController.checkStatus);
+router.put("/shipping/:id", shippingController.changeStatus);
+
 module.exports = router;
