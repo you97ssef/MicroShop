@@ -7,4 +7,8 @@ router.get("/test", testController.get);
 router.get("/test/:id", testController.getId);
 router.post("/test", testController.post);
 
+const paymentController = require("../controllers/paymentController.js");
+
+router.post("/payment", paymentController.makePayment);
+
 module.exports = router;
