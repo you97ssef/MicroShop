@@ -4,12 +4,15 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
         let payments = [];
+        let paymentMethods = ["credit_card", "cash_on_delivery", "paypal"];
         for (let i = 1; i <= 100; i++) {
             payments.push({
                 userId: Math.floor(Math.random() * 100) + 3,
                 orderId: i,
+                amount: Math.random() * 1000,
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                method: paymentMethods[Math.floor(Math.random() * 3)],
             });
         }
         await queryInterface.bulkInsert("Payments", payments);
@@ -27,24 +30,10 @@ module.exports = {
             });
         }
         await queryInterface.bulkInsert("Shippings", shipments);
-
-        /**
-         * Add seed commands here.
-         *
-         * Example:
-         * await queryInterface.bulkInsert('People', [{
-         *   name: 'John Doe',
-         *   isBetaMember: false
-         * }], {});
-         */
     },
 
     async down(queryInterface, Sequelize) {
-        /**
-         * Add commands to revert seed here.
-         *
-         * Example:
-         * await queryInterface.bulkDelete('People', null, {});
-         */
+        await queryInterface.bulkDelete("Payments", null, {});
+        await queryInterface.bulkDelete("Shippings", null, {});
     },
 };
