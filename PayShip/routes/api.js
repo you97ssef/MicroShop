@@ -9,7 +9,7 @@ const paymentController = require("../controllers/paymentController.js");
 
 router.post("/payment", paymentController.makePayment);
 router.get("/payment", paymentController.payments);
-router.get("/payment/:orderId", paymentController.order);
+router.get("/order-payment/:orderId", paymentController.order);
 
 const shippingController = require("../controllers/shippingController.js");
 
