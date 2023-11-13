@@ -40,6 +40,26 @@ async function makePayment(req, res) {
     });
 }
 
+async function payments(req, res) {
+    const payments = await Payment.findAll();
+
+    return res.status(200).json(payments);
+}
+
+async function order(req, res) {
+    const { orderId } = req.params;
+
+    const payment = await Payment.findOne({ where: { orderId } });
+
+    if (!payment) {
+        return res.status(404).json({ message: "Payment not found" });
+    }
+
+    return res.status(200).json(payment);
+}
+
 module.exports = {
     makePayment,
+    payments,
+    order,
 };
