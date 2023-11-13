@@ -1,9 +1,17 @@
 const Payment = require("../data/models").Payment;
+const Shipping = require("../data/models").Shipping;
 
-function makePayment(req, res) {
+async function makePayment(req, res) {
     const { body } = req;
 
-    if (!body || !body.amount || !body.user || !body.order || !body.method) {
+    if (
+        !body ||
+        !body.amount ||
+        !body.user ||
+        !body.order ||
+        !body.method ||
+        !body.address
+    ) {
         return res
             .status(400)
             .json({ message: "Missing required information" });
@@ -16,13 +24,20 @@ function makePayment(req, res) {
         method: body.method,
     };
 
-    Payment.create(newPayment)
-        .then((payment) => {
-            return res.status(201).json(payment);
-        })
-        .catch((error) => {
-            return res.status(500).json({ message: error.message });
-        });
+    const payment = await Payment.create(newPayment);
+
+    const newShipping = {
+        orderId: body.order,
+        address: body.address,
+        status: "Pending",
+    };
+
+    const shipping = await Shipping.create(newShipping);
+
+    return res.status(201).json({
+        payment,
+        shipping,
+    });
 }
 
 module.exports = {
