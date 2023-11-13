@@ -1,42 +1,66 @@
-const Shipping = require('../data/models').Shipping
+const Shipping = require("../data/models").Shipping;
 
 async function checkStatus(req, res) {
     if (!req.params.id) {
-        return res.status(400).json({ message: "Missing required information" })
+        return res
+            .status(400)
+            .json({ message: "Missing required information" });
     }
 
-    const shipping = await Shipping.findByPk(req.params.id)
+    const shipping = await Shipping.findByPk(req.params.id);
 
     if (!shipping) {
-        return res.status(404).json({ message: "Shipping not found" })
+        return res.status(404).json({ message: "Shipping not found" });
     }
 
-    return res.status(200).json(shipping)
+    return res.status(200).json(shipping);
 }
 
 async function changeStatus(req, res) {
-    const { body } = req
+    const { body } = req;
 
     if (!req.params.id || !body.status) {
-        return res.status(400).json({ message: "Missing required information" })
+        return res
+            .status(400)
+            .json({ message: "Missing required information" });
     }
 
-    const shipping = await Shipping.findByPk(req.params.id)
+    const shipping = await Shipping.findByPk(req.params.id);
 
     if (!shipping) {
-        return res.status(404).json({ message: "Shipping not found" })
+        return res.status(404).json({ message: "Shipping not found" });
     }
 
-    shipping.status = req.body.status
+    shipping.status = req.body.status;
     if (req.body.status === "Shipped" && !shipping.shippedOn) {
-        shipping.shippedOn = new Date()
+        shipping.shippedOn = new Date();
     }
-    await shipping.save()
+    await shipping.save();
 
-    return res.status(204).json()
+    return res.status(204).json();
+}
+
+async function shipments(req, res) {
+    const shipments = await Shipping.findAll();
+
+    return res.status(200).json(shipments);
+}
+
+async function order(req, res) {
+    const { orderId } = req.params;
+
+    const shipping = await Shipping.findOne({ where: { orderId } });
+
+    if (!shipping) {
+        return res.status(404).json({ message: "Shipping not found" });
+    }
+
+    return res.status(200).json(shipping);
 }
 
 module.exports = {
     checkStatus,
-    changeStatus
-}
+    changeStatus,
+    shipments,
+    order,
+};
