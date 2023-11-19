@@ -28,7 +28,7 @@ export class ProdCatService {
     async newCategory(data: NewCategory) {
         return await firstValueFrom(this.api.post(`${this.url}/categories`, data));
     }
-
+    
     async updateCategory(id: number, data: UpdateCategory) {
         return await firstValueFrom(this.api.put(`${this.url}/categories/${id}`, data));
     }
