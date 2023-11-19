@@ -1,8 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable, HttpException, Logger } from '@nestjs/common';
 import { AxiosResponse, AxiosError } from 'axios';
-import { LoginDto, RegisterDto } from 'src/dtos/user.dto';
-import { UserRole } from 'src/helpers/user.helper';
+import { LoginDto, RegisterDto, UserRole } from 'src/helpers/user-verse.helper';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable()
@@ -10,7 +9,7 @@ export class UserVerseService {
     private readonly url: string = process.env.USER_VERSE;
     private readonly logger = new Logger(UserVerseService.name);
 
-    constructor(private readonly api: HttpService) { 
+    constructor(private readonly api: HttpService) {
         api.axiosRef.interceptors.response.use(
             (response: AxiosResponse) => {
                 return response.data;
@@ -31,10 +30,12 @@ export class UserVerseService {
     }
 
     async verify(role: UserRole, token: string) {
-        return await firstValueFrom(this.api.get(`${this.url}/${role}`, {
-            headers: {
-                Authorization: token,
-            },
-        }));
+        return await firstValueFrom(
+            this.api.get(`${this.url}/${role}`, {
+                headers: {
+                    Authorization: token,
+                },
+            }),
+        );
     }
 }

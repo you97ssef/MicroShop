@@ -1,9 +1,9 @@
 import { Controller, Post, Body, HttpCode } from '@nestjs/common';
-import { LoginDto, RegisterDto } from 'src/dtos/user.dto';
+import { LoginDto, RegisterDto } from 'src/helpers/user-verse.helper';
 import { UserVerseService } from 'src/services/user-verse.service';
 
-@Controller()
-export class UserController {
+@Controller('auth')
+export class AuthController {
     constructor(private readonly service: UserVerseService) {}
 
     @Post('/login')
