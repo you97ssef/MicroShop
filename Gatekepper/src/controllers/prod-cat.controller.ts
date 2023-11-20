@@ -1,4 +1,5 @@
-import { Controller, Post, Body, HttpCode, Get, Put, Delete, Param, Query } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, Get, Put, Delete, Param, Query, UseGuards } from '@nestjs/common';
+import { AdminGuard } from 'src/guards/role.guard';
 import { NewCategory, NewProduct, UpdateCategory, UpdateProduct } from 'src/helpers/prod-cat.helper';
 import { ProdCatService } from 'src/services/prod-cat.service';
 
@@ -19,35 +20,41 @@ export class ProdCatController {
     }
 
     @Post('/categories')
+    @UseGuards(AdminGuard)
     async newCategory(@Body() data: NewCategory) {
         return await this.service.newCategory(data);
     }
 
     @Post('/products')
+    @UseGuards(AdminGuard)
     async newProduct(@Body() data: NewProduct) {
         return await this.service.newProduct(data);
     }
 
     @Put('/categories/:id')
     @HttpCode(204)
+    @UseGuards(AdminGuard)
     async updateCategory(@Param('id') id: number, @Body() data: UpdateCategory) {
         await this.service.updateCategory(id, data);
     }
 
     @Put('/products/:id')
     @HttpCode(204)
+    @UseGuards(AdminGuard)
     async updateProduct(@Param('id') id: number, @Body() data: UpdateProduct) {
         await this.service.updateProduct(id, data);
     }
 
     @Delete('/categories/:id')
     @HttpCode(204)
+    @UseGuards(AdminGuard)
     async deleteCategory(@Param('id') id: number) {
         await this.service.deleteCategory(id);
     }
 
     @Delete('/products/:id')
     @HttpCode(204)
+    @UseGuards(AdminGuard)
     async deleteProduct(@Param('id') id: number) {
         await this.service.deleteProduct(id);
     }
