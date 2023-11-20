@@ -1,25 +1,13 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable, HttpException, Logger } from '@nestjs/common';
-import { AxiosResponse, AxiosError } from 'axios';
+import { Injectable } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { NewCategory, NewProduct, UpdateCategory, UpdateProduct } from 'src/helpers/prod-cat.helper';
 
 @Injectable()
 export class ProdCatService {
     private readonly url: string = process.env.PROD_CAT;
-    private readonly logger = new Logger(ProdCatService.name);
 
-    constructor(private readonly api: HttpService) {
-        api.axiosRef.interceptors.response.use(
-            (response: AxiosResponse) => {
-                return response.data;
-            },
-            (error: AxiosError) => {
-                this.logger.error(error);
-                throw new HttpException(error.response.data, error.response?.status);
-            },
-        );
-    }
+    constructor(private readonly api: HttpService) { }
 
     async categories() {
         return await firstValueFrom(this.api.get(`${this.url}/categories`));
