@@ -10,8 +10,8 @@ class RoleGuard implements CanActivate {
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
-        const response = await this.userVerseService.verify(this.role, request.headers.authorization);
-        request.user = response;
+        const response: any = await this.userVerseService.verify(this.role, request.headers.authorization);
+        request.user = response.user;
         return true;
     }
 }
