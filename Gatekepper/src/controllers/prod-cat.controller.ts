@@ -1,6 +1,6 @@
 import { Controller, Post, Body, HttpCode, Get, Put, Delete, Param, Query, UseGuards } from '@nestjs/common';
 import { AdminGuard } from 'src/guards/role.guard';
-import { NewCategory, NewProduct, UpdateCategory, UpdateProduct } from 'src/helpers/prod-cat.helper';
+import { NewCategory, NewProduct, UpdateAvailability, UpdateCategory, UpdateProduct } from 'src/helpers/prod-cat.helper';
 import { ProdCatService } from 'src/services/prod-cat.service';
 
 @Controller()
@@ -69,5 +69,12 @@ export class ProdCatController {
     @HttpCode(200)
     async filter(@Query('maxPrice') maxPrice: number, @Query('minPrice') minPrice: number) {
         return await this.service.filter(maxPrice, minPrice);
+    }
+
+    @Put('/products/:id/availability')
+    @HttpCode(204)
+    @UseGuards(AdminGuard)
+    async updateAvailability(@Param('id') id: number, @Body() availability: UpdateAvailability) {
+        await this.service.updateProduct(id, availability);
     }
 }

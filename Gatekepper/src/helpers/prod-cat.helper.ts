@@ -25,3 +25,7 @@ export interface UpdateProduct {
     availability: number | null;
     category_id: number | null;
 }
+
+export interface UpdateAvailability {
+    availability: number;
+}

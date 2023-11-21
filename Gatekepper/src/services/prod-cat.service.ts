@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
-import { NewCategory, NewProduct, UpdateCategory, UpdateProduct } from 'src/helpers/prod-cat.helper';
+import { NewCategory, NewProduct, UpdateAvailability, UpdateCategory, UpdateProduct } from 'src/helpers/prod-cat.helper';
 
 @Injectable()
 export class ProdCatService {
@@ -33,7 +33,7 @@ export class ProdCatService {
         return await firstValueFrom(this.api.post(`${this.url}/products`, data));
     }
 
-    async updateProduct(id: number, data: UpdateProduct) {
+    async updateProduct(id: number, data: UpdateProduct | UpdateAvailability) {
         return await firstValueFrom(this.api.put(`${this.url}/products/${id}`, data));
     }
 
