@@ -3,8 +3,10 @@ import { UserVerseService } from './services/user-verse.service';
 import { HttpModule } from '@nestjs/axios';
 import { ConfigModule } from '@nestjs/config';
 import { AuthController } from './controllers/auth.controller';
-import { ProdCatController } from './controllers/prod-cat.controller';
+import { CategoriesProductsController } from './controllers/categories-products.controller';
 import { ProdCatService } from './services/prod-cat.service';
+import { OrderProService } from './services/order-pro.service';
+import { OrdersController } from './controllers/orders.controller';
 
 @Module({
     imports: [
@@ -13,7 +15,7 @@ import { ProdCatService } from './services/prod-cat.service';
             envFilePath: '.env.development',
         }),
     ],
-    controllers: [AuthController, ProdCatController],
-    providers: [UserVerseService, ProdCatService],
+    controllers: [AuthController, CategoriesProductsController, OrdersController],
+    providers: [UserVerseService, ProdCatService, OrderProService],
 })
 export class AppModule {}
