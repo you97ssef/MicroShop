@@ -10,7 +10,7 @@ export class UserVerseService {
     constructor(private readonly api: HttpService) { }
 
     async login(login: LoginDto) {
-        return await firstValueFrom(this.api.post(`${this.url}/login`, login));
+        return await firstValueFrom(this.api.post(`${this.url}/login`, {username_or_email: login.usernameOrEmail, password: login.password}));
     }
 
     async register(register: RegisterDto) {
