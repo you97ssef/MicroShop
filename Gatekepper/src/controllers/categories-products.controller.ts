@@ -4,7 +4,7 @@ import { NewCategory, NewProduct, UpdateAvailability, UpdateCategory, UpdateProd
 import { ProdCatService } from 'src/services/prod-cat.service';
 
 @Controller()
-export class ProdCatController {
+export class CategoriesProductsController {
     constructor(private readonly service: ProdCatService) {}
 
     @Get('/categories')
