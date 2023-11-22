@@ -18,7 +18,7 @@ export class OrderProService {
     }
 
     async checkout(userId: number) {
-        return await firstValueFrom(this.api.get(`${this.url}/Cart/${userId}/checkout`));
+        return await firstValueFrom(this.api.put(`${this.url}/Cart/${userId}/checkout`));
     }
 
     async addItem(userId: number, item: Item) {
