@@ -48,4 +48,8 @@ export class ProdCatService {
     async filter(maxPrice: number, minPrice: number) {
         return await firstValueFrom(this.api.get(`${this.url}/filter?max=${maxPrice}&min=${minPrice}`));
     }
+
+    async productsByIds(ids: number[]) {
+        return await firstValueFrom(this.api.post(`${this.url}/products-by-ids`, ids));
+    }
 }
