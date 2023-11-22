@@ -1,3 +1,5 @@
+const { shippingStatus } = require("../data/enums");
+
 const Payment = require("../data/models").Payment;
 const Shipping = require("../data/models").Shipping;
 
@@ -29,7 +31,8 @@ async function makePayment(req, res) {
     const newShipping = {
         orderId: body.order,
         address: body.address,
-        status: "Pending",
+        status: shippingStatus.PENDING,
+        code: Math.random().toString(36).substring(2, 15),
     };
 
     const shipping = await Shipping.create(newShipping);

@@ -1,6 +1,8 @@
+const { Op } = require("sequelize");
+
 const Shipping = require("../data/models").Shipping;
 
-async function checkStatus(req, res) {
+async function getShipment(req, res) {
     if (!req.params.id) {
         return res
             .status(400)
@@ -8,6 +10,22 @@ async function checkStatus(req, res) {
     }
 
     const shipping = await Shipping.findByPk(req.params.id);
+
+    if (!shipping) {
+        return res.status(404).json({ message: "Shipping not found" });
+    }
+
+    return res.status(200).json(shipping);
+}
+
+async function checkStatus(req, res) {
+    if (!req.params.code) {
+        return res
+            .status(400)
+            .json({ message: "Missing required information" });
+    }
+
+    const shipping = await Shipping.findOne({ where: { code: req.params.code } });
 
     if (!shipping) {
         return res.status(404).json({ message: "Shipping not found" });
@@ -32,7 +50,7 @@ async function changeStatus(req, res) {
     }
 
     shipping.status = req.body.status;
-    if (req.body.status === "Shipped" && !shipping.shippedOn) {
+    if (req.body.status === "Delivered" && !shipping.shippedOn) {
         shipping.shippedOn = new Date();
     }
     await shipping.save();
@@ -58,9 +76,19 @@ async function order(req, res) {
     return res.status(200).json(shipping);
 }
 
+async function openShipments(req, res) {
+    const shipments = await Shipping.findAll({
+        where: { status: { [Op.ne]: "delivered" } },
+    });
+
+    return res.status(200).json(shipments);
+}
+
 module.exports = {
     checkStatus,
     changeStatus,
     shipments,
     order,
+    openShipments,
+    getShipment
 };
