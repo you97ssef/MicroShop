@@ -93,3 +93,22 @@ func (ctl *Controller) GetCategoryProducts(c *gin.Context) {
 
 	Ok(c, products, "Products found successfully")
 }
+
+func (ctl *Controller) ProductsByIds(c *gin.Context) {
+	var ids []int
+
+	if err := c.ShouldBindJSON(&ids); err != nil {
+		BadRequest(c, err.Error())
+		return
+	}
+
+	var products []models.Product
+
+	if err := ctl.Server.Data.Where("id IN (?)", ids).Find(&products).Error; err != nil {
+		NotFound(c, err.Error())
+		return
+	}
+
+
+	Ok(c, products, "Products found successfully")
+}

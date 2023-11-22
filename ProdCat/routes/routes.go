@@ -30,6 +30,8 @@ func (r *Routes) RegisterRoutes(c *controllers.Controller, m *middleware.Middlew
 
 	api.GET("/search", c.Search)
 	api.GET("/filter", c.Filter)
+
+	api.POST("/products-by-ids", c.ProductsByIds)
 }
 
 func (r *Routes) RegisterCors() {
