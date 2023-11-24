@@ -10,5 +10,11 @@ services:
         volumes:
             - datavortex:/var/lib/postgresql/data
 
+    userverse:
+        container_name: microshop-userverse
+        build: /UserVerse/.
+        depends_on:
+            - datavortex
+        
 volumes:
     datavortex:
