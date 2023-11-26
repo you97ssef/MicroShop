@@ -33,6 +33,18 @@ services:
         build: /PayShip/.
         depends_on:
             - datavortex
+
+    gatekepper:
+        container_name: microshop-gatekepper
+        build: /Gatekepper/.
+        depends_on:
+            - userverse
+            - prodcat
+            - orederpro
+            - payship
+        ports:
+            - 8000:80
+
     
 volumes:
     datavortex:
