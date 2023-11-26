@@ -15,6 +15,12 @@ services:
         build: /UserVerse/.
         depends_on:
             - datavortex
+
+    prodcat:
+        container_name: microshop-prodcat
+        build: /ProdCat/.
+        depends_on:
+            - datavortex
         
 volumes:
     datavortex:
