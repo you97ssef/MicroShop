@@ -3,7 +3,7 @@
 FLAG_FILE=/app/.firstrun
 
 if [ ! -f "$FLAG_FILE" ]; then
-    sleep 5
+    sleep 10
     php artisan migrate --seed
     php artisan setup
     touch "$FLAG_FILE"

@@ -3,7 +3,8 @@
 FLAG_FILE=/app/.firstrun
 
 if [ ! -f "$FLAG_FILE" ]; then
-    sleep 5
+    sleep 10
+    touch "$FLAG_FILE"
 fi
 
 tail -f /app/logs/app.log &
