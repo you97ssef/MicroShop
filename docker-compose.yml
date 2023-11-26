@@ -27,6 +27,12 @@ services:
         build: /OrderPro/.
         depends_on:
             - datavortex 
+
+    payship:
+        container_name: microshop-payship
+        build: /PayShip/.
+        depends_on:
+            - datavortex
     
 volumes:
     datavortex:
