@@ -9,8 +9,9 @@ RUN go mod download
 
 
 RUN mkdir -p logs \
-    && touch logs/app.log \
-    && cp environment-docker.json environment.json
+    && touch logs/app.log
+
+COPY environment-docker.json environment.json
 
 
 RUN go build -o service
