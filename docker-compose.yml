@@ -21,6 +21,12 @@ services:
         build: /ProdCat/.
         depends_on:
             - datavortex
-        
+
+    orederpro:
+        container_name: microshop-orderpro
+        build: /OrderPro/.
+        depends_on:
+            - datavortex 
+    
 volumes:
     datavortex:
