@@ -36,9 +36,14 @@ func (s *Server) Initialize(envFile string) {
 	s.Filesystem.ReadJSONFromFile(envFile, &environment)
 
 	s.Config = &utils.Config{
+		Mode:               environment.(map[string]interface{})["config"].(map[string]interface{})["mode"].(string),
 		Port:               environment.(map[string]interface{})["config"].(map[string]interface{})["port"].(string),
 		LogFile:            environment.(map[string]interface{})["config"].(map[string]interface{})["log_file"].(string),
 		DatabaseConnection: environment.(map[string]interface{})["config"].(map[string]interface{})["database_connection"].(string),
+	}
+
+	if s.Config.Mode == "production" {
+		gin.SetMode(gin.ReleaseMode)
 	}
 
 	s.Globals = make(map[string]interface{})
@@ -89,12 +94,6 @@ func checkFile(s *Server, file string) error {
 }
 
 func checkDatabase(s *Server) error {
-	err := checkFile(s, s.Config.DatabaseConnection)
-
-	if err != nil {
-		return err
-	}
-
 	s.Data.Initialize()
 
 	return nil
