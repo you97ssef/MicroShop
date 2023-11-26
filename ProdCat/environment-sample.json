@@ -1,9 +1,9 @@
 {
     "config": {
         "mode": "development",
-        "port": "8001",
+        "port": "8002",
         "log_file": "./logs/app.log",
-        "database_connection": "host=localhost user=postgres password=postgres dbname=test port=5432"
+        "database_connection": "host=localhost user=postgres password=postgres dbname=prodcat port=5432"
     },
     "mailer": {
         "username": "username",

@@ -11,4 +11,6 @@ if [ ! -f "$FLAG_FILE" ]; then
     touch "$FLAG_FILE"
 fi
 
+npx sequelize-cli db:migrate
+
 npm start

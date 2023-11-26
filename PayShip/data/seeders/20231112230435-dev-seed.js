@@ -5,11 +5,15 @@ const { shippingStatus, paymentMethods } = require('../enums');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
+        const paidOrders = process.env.NODE_ENV === "production" ? 1000 : 500;
+        const users = process.env.NODE_ENV === "production" ? 200 : 100;
+        const startingUserId = process.env.NODE_ENV === "production" ? 3 : 3;
+
         let payments = [];
         let methods = [paymentMethods.CREDIT_CARD, paymentMethods.CASH_ON_DELIVERY, paymentMethods.PAYPAL];
-        for (let i = 1; i <= 100; i++) {
+        for (let i = 1; i <= paidOrders; i++) {
             payments.push({
-                userId: Math.floor(Math.random() * 100) + 3,
+                userId: Math.floor(Math.random() * users) + startingUserId,
                 orderId: i,
                 amount: Math.random() * 1000,
                 createdAt: new Date(),
@@ -21,7 +25,7 @@ module.exports = {
 
         let shipments = [];
         let statuses = [shippingStatus.PENDING, shippingStatus.SHIPPING, shippingStatus.DELIVERED];
-        for (let i = 1; i <= 100; i++) {
+        for (let i = 1; i <= paidOrders; i++) {
             shipments.push({
                 orderId: i,
                 address: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
