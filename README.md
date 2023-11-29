@@ -9,6 +9,9 @@ This is a project that is designed on a microservices architecture, built on dif
 -   **PayShip**: Payment and shipping API REST microservice overseeing payment and shipping management and processing. Developed using Node.js and Express.
 -   **Gatekepper**: Gateway API REST microservice managing routing and interconnection between the microservices. Developed using Node.js with TypeScript and Nest.js.
 
+![Microshop](https://github.com/you97ssef/MicroShop/assets/46852751/ab6a11ee-d0cf-4dda-9c57-132fb7182f15)
+
+
 ## Prerequisites
 
 Before running these microservices, ensure that you have Docker and Docker Compose installed on your machine. Alternatively, you can refer to the readme file of each microservice for specific instructions on how to run it.
