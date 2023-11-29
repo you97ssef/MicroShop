@@ -1,9 +1,9 @@
 {
     "config": {
-        "mode": "development",
-        "port": "8002",
+        "mode": "production",
+        "port": "80",
         "log_file": "./logs/app.log",
-        "database_connection": "host=localhost user=postgres password=postgres dbname=prodcat port=5432"
+        "database_connection": "host=datavortex user=postgres password=postgres dbname=ProdCat port=5432"
     },
     "mailer": {
         "username": "username",

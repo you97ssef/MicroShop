@@ -4,12 +4,13 @@ using OrderPro.Models;
 
 public class Migrator
 {
-    private static IEnumerable<Cart> GenerateCarts(int count, int users, int firstUser) 
+    private static IEnumerable<Cart> GenerateCarts(int count, int users, int firstUser, int checkedOut) 
     {
         var carts = new List<Cart>();
         for (int i = 1; i <= count; i++) {
             carts.Add(new Cart {
-                UserId = Random.Shared.Next(firstUser, users)
+                UserId = Random.Shared.Next(firstUser, users),
+                CheckedOut = i <= checkedOut,
             });
         }
         return carts;
@@ -29,7 +30,7 @@ public class Migrator
     }
 
 
-    internal static async Task MigrateAndSeedDatabase(OrderProContext context, int carts = 0, int items = 0, int products = 0, int users = 0, int firstUser = 0) 
+    internal static async Task MigrateAndSeedDatabase(OrderProContext context, int carts = 0, int items = 0, int products = 0, int users = 0, int firstUser = 0, int checkedOut = 0) 
     {
         var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
         if (pendingMigrations.Any()) 
@@ -39,7 +40,7 @@ public class Migrator
             
             if (!appliedMigrations.Any() && carts > 0) 
             {
-                var cartsToAdd = GenerateCarts(carts, users, firstUser);
+                var cartsToAdd = GenerateCarts(carts, users, firstUser, checkedOut);
                 await context.Carts.AddRangeAsync(cartsToAdd);
 
                 var itemsToAdd = GenerateItems(items, carts, products);

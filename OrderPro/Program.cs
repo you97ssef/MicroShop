@@ -25,11 +25,11 @@ using (var scope = app.Services.CreateScope())
     {
         app.UseSwagger();
         app.UseSwaggerUI();
-        await Migrator.MigrateAndSeedDatabase(context, 100, 1000, 100, 102, 3);
+        await Migrator.MigrateAndSeedDatabase(context, 1000, 10000, 100, 100, 3, 500);
     }
     else 
     {
-        await Migrator.MigrateAndSeedDatabase(context);
+        await Migrator.MigrateAndSeedDatabase(context, 2000, 20000, 200, 200, 3, 1000);
     }
 }
 

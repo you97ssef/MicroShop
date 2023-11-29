@@ -1,0 +1,550 @@
+{
+    "info": {
+        "_postman_id": "76336bf4-fd1c-4227-9527-a34ca834d0ee",
+        "name": "Microshop",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_exporter_id": "13996413"
+    },
+    "item": [
+        {
+            "name": "Gatekepper",
+            "item": [
+                {
+                    "name": "ProdCat",
+                    "item": [
+                        {
+                            "name": "Categories",
+                            "item": [
+                                {
+                                    "name": "all",
+                                    "request": {
+                                        "auth": {
+                                            "type": "bearer",
+                                            "bearer": [
+                                                {
+                                                    "key": "token",
+                                                    "value": "{{token}}",
+                                                    "type": "string"
+                                                }
+                                            ]
+                                        },
+                                        "method": "GET",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{gatekepper}}/categories",
+                                            "host": ["{{gatekepper}}"],
+                                            "path": ["categories"]
+                                        }
+                                    },
+                                    "response": []
+                                },
+                                {
+                                    "name": "new",
+                                    "request": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\r\n    \"name\" : \"Category-test\"\r\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        },
+                                        "url": {
+                                            "raw": "{{gatekepper}}/categories",
+                                            "host": ["{{gatekepper}}"],
+                                            "path": ["categories"]
+                                        }
+                                    },
+                                    "response": []
+                                },
+                                {
+                                    "name": "update",
+                                    "request": {
+                                        "method": "PUT",
+                                        "header": [],
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\r\n    \"name\" : \"Category-test-updated\"\r\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        },
+                                        "url": {
+                                            "raw": "{{gatekepper}}/categories/11",
+                                            "host": ["{{gatekepper}}"],
+                                            "path": ["categories", "11"]
+                                        }
+                                    },
+                                    "response": []
+                                },
+                                {
+                                    "name": "delete",
+                                    "request": {
+                                        "method": "DELETE",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{gatekepper}}/categories/11",
+                                            "host": ["{{gatekepper}}"],
+                                            "path": ["categories", "11"]
+                                        }
+                                    },
+                                    "response": []
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Products",
+                            "item": [
+                                {
+                                    "name": "category",
+                                    "request": {
+                                        "method": "GET",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{gatekepper}}/categories/1/products",
+                                            "host": ["{{gatekepper}}"],
+                                            "path": [
+                                                "categories",
+                                                "1",
+                                                "products"
+                                            ]
+                                        }
+                                    },
+                                    "response": []
+                                },
+                                {
+                                    "name": "new",
+                                    "request": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\r\n\t\"name\": \"Product 1\",\r\n\t\"description\": \"This is a product\",\r\n\t\"price\": 10.99,\r\n\t\"availability\": 100,\r\n\t\"category_id\": 1\r\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        },
+                                        "url": {
+                                            "raw": "{{gatekepper}}/products",
+                                            "host": ["{{gatekepper}}"],
+                                            "path": ["products"]
+                                        }
+                                    },
+                                    "response": []
+                                },
+                                {
+                                    "name": "update",
+                                    "request": {
+                                        "method": "PUT",
+                                        "header": [],
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\r\n    \"name\" : \"product-test-updated\"\r\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        },
+                                        "url": {
+                                            "raw": "{{gatekepper}}/products/11",
+                                            "host": ["{{gatekepper}}"],
+                                            "path": ["products", "11"]
+                                        }
+                                    },
+                                    "response": []
+                                },
+                                {
+                                    "name": "delete",
+                                    "request": {
+                                        "method": "DELETE",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{gatekepper}}/products/11",
+                                            "host": ["{{gatekepper}}"],
+                                            "path": ["products", "11"]
+                                        }
+                                    },
+                                    "response": []
+                                }
+                            ]
+                        },
+                        {
+                            "name": "search",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{gatekepper}}/search?q=a",
+                                    "host": ["{{gatekepper}}"],
+                                    "path": ["search"],
+                                    "query": [
+                                        {
+                                            "key": "q",
+                                            "value": "a"
+                                        }
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "filter",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{gatekepper}}/filter?minPrice=10&maxPrice=100",
+                                    "host": ["{{gatekepper}}"],
+                                    "path": ["filter"],
+                                    "query": [
+                                        {
+                                            "key": "minPrice",
+                                            "value": "10"
+                                        },
+                                        {
+                                            "key": "maxPrice",
+                                            "value": "100"
+                                        }
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "UserVerse",
+                    "item": [
+                        {
+                            "name": "Auth",
+                            "item": [
+                                {
+                                    "name": "login",
+                                    "request": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\r\n    \"usernameOrEmail\": \"admin\",\r\n    \"password\": \"admin\"\r\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        },
+                                        "url": {
+                                            "raw": "{{gatekepper}}/auth/login",
+                                            "host": ["{{gatekepper}}"],
+                                            "path": ["auth", "login"]
+                                        }
+                                    },
+                                    "response": []
+                                },
+                                {
+                                    "name": "register",
+                                    "request": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\r\n    \"name\": \"John Doe\",\r\n    \"email\": \"joh1n@doe.com\",\r\n    \"username\": \"john1doe\",\r\n    \"password\": \"password\"\r\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        },
+                                        "url": {
+                                            "raw": "{{gatekepper}}/register",
+                                            "host": ["{{gatekepper}}"],
+                                            "path": ["register"]
+                                        }
+                                    },
+                                    "response": []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "OrderPro",
+                    "item": [
+                        {
+                            "name": "get cart",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{token}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{gatekepper}}/cart",
+                                    "host": ["{{gatekepper}}"],
+                                    "path": ["cart"]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "new cart",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{token}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "[\r\n    {\r\n        \"productId\" : 10,\r\n        \"quantity\" : 10\r\n    }\r\n]",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "{{gatekepper}}/cart",
+                                    "host": ["{{gatekepper}}"],
+                                    "path": ["cart"]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "add item",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{token}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n    \"productId\" : 9,\r\n    \"quantity\" : 10\r\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "{{gatekepper}}/item",
+                                    "host": ["{{gatekepper}}"],
+                                    "path": ["item"]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "delete item",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{token}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "DELETE",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{gatekepper}}/item/10",
+                                    "host": ["{{gatekepper}}"],
+                                    "path": ["item", "10"]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "PayShip",
+                    "item": [
+                        {
+                            "name": "open-shipments",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{gatekepper}}/open-shipment",
+                                    "host": ["{{gatekepper}}"],
+                                    "path": ["open-shipment"]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "code",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{gatekepper}}/shipment/qkqegfbui6",
+                                    "host": ["{{gatekepper}}"],
+                                    "path": ["shipment", "qkqegfbui6"]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "change status",
+                            "request": {
+                                "method": "PUT",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n    \"status\": \"delivered\"\r\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "{{gatekepper}}/shipment/2",
+                                    "host": ["{{gatekepper}}"],
+                                    "path": ["shipment", "2"]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "shipment",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{gatekepper}}/shipment",
+                                    "host": ["{{gatekepper}}"],
+                                    "path": ["shipment"]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "order shipment",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{gatekepper}}/cart/2/shipment",
+                                    "host": ["{{gatekepper}}"],
+                                    "path": ["cart", "2", "shipment"]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "order payment",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{gatekepper}}/cart/2/payment",
+                                    "host": ["{{gatekepper}}"],
+                                    "path": ["cart", "2", "payment"]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "payments",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{gatekepper}}/payment",
+                                    "host": ["{{gatekepper}}"],
+                                    "path": ["payment"]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "checkout",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n    \"method\": \"paypal\",\r\n    \"address\": \"address\"\r\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "{{gatekepper}}/checkout",
+                                    "host": ["{{gatekepper}}"],
+                                    "path": ["checkout"]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [""]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [""]
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "gatekepper",
+            "value": "http://localhost:8000",
+            "type": "string"
+        },
+        {
+            "key": "token",
+            "value": "token",
+            "type": "string"
+        }
+    ]
+}

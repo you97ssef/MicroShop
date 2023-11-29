@@ -1,0 +1,50 @@
+version: "3.1"
+
+services:
+    datavortex:
+        container_name: microshop-datavortex
+        build: /DataVortex/.
+        environment:
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_MULTIPLE_DATABASES=UserVerse,ProdCat,PayShip,OrderPro
+        volumes:
+            - datavortex:/var/lib/postgresql/data
+
+    userverse:
+        container_name: microshop-userverse
+        build: /UserVerse/.
+        depends_on:
+            - datavortex
+
+    prodcat:
+        container_name: microshop-prodcat
+        build: /ProdCat/.
+        depends_on:
+            - datavortex
+
+    orederpro:
+        container_name: microshop-orderpro
+        build: /OrderPro/.
+        depends_on:
+            - datavortex 
+
+    payship:
+        container_name: microshop-payship
+        build: /PayShip/.
+        depends_on:
+            - datavortex
+
+    gatekepper:
+        container_name: microshop-gatekepper
+        build: /Gatekepper/.
+        depends_on:
+            - userverse
+            - prodcat
+            - orederpro
+            - payship
+        ports:
+            - 8000:80
+
+    
+volumes:
+    datavortex:

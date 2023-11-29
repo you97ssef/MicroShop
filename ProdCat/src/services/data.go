@@ -1,7 +1,7 @@
 package services
 
 import (
-	"gorm.io/driver/sqlite"
+    "gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -16,7 +16,7 @@ type migration struct {
 }
 
 func (s *Data) Initialize()  {
-	s.DB, _ = gorm.Open(sqlite.Open(*s.Connection), &gorm.Config{})
+	s.DB, _ = gorm.Open(postgres.Open(*s.Connection), &gorm.Config{})
 	
 	s.AutoMigrate(&migration{})
 	s.Migrate("migrations", &migration{})
